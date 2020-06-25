@@ -51,6 +51,25 @@ class Calculator:
 
         print(f'Your annuity payment = {annuity_payment}!')
 
+    def calculate_differential_payments(self):
+        print("Enter credit principal:")
+        credit_p = int(input())
+        print("Enter count of periods:")
+        c_periods = int(input())
+        print("Enter credit interest:")
+        c_interest = float(input())
+
+        nominal_interest = c_interest / 1200
+
+        # start with 1 and end with total + 1; calculations start after the month is over
+        # but python is zero indexed
+        for i in range(1, c_periods + 1):
+            inner_fraction = (credit_p * (i - 1)) / c_periods
+            bracket_data = credit_p - inner_fraction
+            total_calc = math.ceil(credit_p / c_periods + nominal_interest * bracket_data)
+
+            print(f'month {i}: paid out {total_calc}')
+
     def calculate_principal(self):
         print("Enter monthly payment:")
         m_payment = float(input())
@@ -70,19 +89,27 @@ class Calculator:
         print(f'Your credit principal = {credit_principal}!')
 
     def intro(self):
-        print("What do you want to calculate?")
-        print('type "n" - for count of months, ')
-        print('type "a" - for annuity monthly payment,')
-        print('type "p" - for credit principal: ')
+        print("What type of payment do you choose? 'annuity' or 'diff'")
+        pay_type = input()
 
-        choice = input()
+        if pay_type == 'annuity':
+            print("What do you want to calculate?")
+            print('type "n" - for count of months, ')
+            print('type "a" - for annuity monthly payment,')
+            print('type "p" - for credit principal: ')
 
-        if choice == 'n':
-            self.calculate_months()
-        elif choice == 'a':
-            self.calculate_monthly_payments()
-        elif choice == 'p':
-            self.calculate_principal()
+            choice = input()
+
+            if choice == 'n':
+                self.calculate_months()
+            elif choice == 'a':
+                self.calculate_monthly_payments()
+            elif choice == 'p':
+                self.calculate_principal()
+            else:
+                print("Invalid input!!")
+        elif pay_type == 'diff':
+            self.calculate_differential_payments()
         else:
             print("Invalid input!!")
 

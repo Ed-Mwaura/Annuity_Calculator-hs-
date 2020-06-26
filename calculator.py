@@ -18,7 +18,7 @@ class Calculator:
         n_months = math.ceil(math.log(log_base, (1 + nominal_interest)))
 
         if n_months % 12 == 0:
-            n_years = n_months / 12
+            n_years = n_months // 12
 
             if n_years == 1:
                 print(f'You need {n_years} year to repay this credit')
